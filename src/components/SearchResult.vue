@@ -1,37 +1,38 @@
 <template>
-  <v-row>
-    <v-col>
-      <v-tabs v-model="tabName">
-        <v-tab v-for="item in tabNames" :key="item">
-          {{ item }}
-        </v-tab>
-      </v-tabs>
-      <v-tabs-items v-model="tabName">
-        <v-tab-item v-for="(content, i) in contents" :key="i">
-          <v-card color="basil" flat>
-            <v-card-text>{{ content }}</v-card-text>
-          </v-card>
-        </v-tab-item>
-      </v-tabs-items>
-    </v-col>
-  </v-row>
+  <v-simple-table>
+    <tbody>
+      <tr v-for="(item, i) in content" :key="i">
+        <td>{{ item.key }}</td>
+        <td v-if="Array.isArray(item.value)" class="pr-0">
+          <v-simple-table>
+            <tbody>
+              <tr v-for="(obj, j) in item.value" :key="j">
+                <td>{{ obj["State Name"] }}</td>
+                <td>{{ obj["State Value"] }}</td>
+              </tr>
+            </tbody>
+          </v-simple-table>
+        </td>
+        <td v-else>
+          {{ item.value }}
+          <v-btn v-if="item.btn" class="ml-4" small color="secondary">{{
+            item.btn
+          }}</v-btn>
+        </td>
+      </tr>
+    </tbody>
+  </v-simple-table>
 </template>
 
 <script>
-import { tab, base, detail } from "@/mock/data.js";
-
 export default {
-  name: "Search",
+  name: "SearchResult",
 
-  data: () => ({
-    tabName: null,
-    tabNames: [],
-    contents: [],
-  }),
-
-  created() {
-    this.tabNames = tab;
-    this.contents = [base[0].data, detail[0].data];
+  props: {
+    content: {
+      type: Array,
+      required: true,
+    },
   },
 };
 </script>

@@ -27,7 +27,7 @@
         />
       </v-col>
       <v-col cols="3" class="d-flex align-center">
-        <v-btn block class="mr-4">Query</v-btn>
+        <v-btn block class="mr-4" color="primary">Query</v-btn>
       </v-col>
     </v-row>
   </v-form>
